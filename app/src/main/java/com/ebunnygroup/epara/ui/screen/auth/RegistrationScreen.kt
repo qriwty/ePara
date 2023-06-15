@@ -18,16 +18,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ebunnygroup.epara.data.auth.registration.RegistrationUIEvent
+import com.ebunnygroup.epara.data.auth.registration.RegistrationViewModel
 import com.ebunnygroup.epara.ui.common.AppWatermarkComponent
 import com.ebunnygroup.epara.ui.common.ButtonComponent
 import com.ebunnygroup.epara.ui.common.ClickableTextComponent
-import com.ebunnygroup.epara.ui.common.ScreenContent
 import com.ebunnygroup.epara.ui.common.SecretTextFieldComponent
 import com.ebunnygroup.epara.ui.common.TextFieldComponent
 
 
 @Composable
-fun RegistrationScreen(onRegisterClick: () -> Unit, onLoginClick: () -> Unit) {
+fun RegistrationScreen(
+    onRegisterClick: () -> Unit,
+    onLoginClick: () -> Unit,
+    registrationViewModel: RegistrationViewModel = viewModel()
+) {
     val typography = MaterialTheme.typography
     val colors = MaterialTheme.colorScheme
 
@@ -59,37 +65,47 @@ fun RegistrationScreen(onRegisterClick: () -> Unit, onLoginClick: () -> Unit) {
             TextFieldComponent(
                 labelText = "Name",
                 icon = Icons.Default.People,
-                onTextChanged = {},
-                errorStatus = false
+                onTextChanged = {
+                    registrationViewModel.onEvent(RegistrationUIEvent.FirstNameChanged(it))
+                },
+                errorStatus = registrationViewModel.registrationUIState.value.firstNameError
             )
 
             TextFieldComponent(
                 labelText = "Surname",
                 icon = Icons.Default.People,
-                onTextChanged = {},
-                errorStatus = false
+                onTextChanged = {
+                    registrationViewModel.onEvent(RegistrationUIEvent.LastNameChanged(it))
+                },
+                errorStatus = registrationViewModel.registrationUIState.value.lastNameError
             )
 
             TextFieldComponent(
                 labelText = "Email",
                 icon = Icons.Default.MailOutline,
-                onTextChanged = {},
-                errorStatus = false
+                onTextChanged = {
+                    registrationViewModel.onEvent(RegistrationUIEvent.EmailChanged(it))
+                },
+                errorStatus = registrationViewModel.registrationUIState.value.emailError
             )
 
             SecretTextFieldComponent(
                 labelText = "Password",
                 icon = Icons.Default.Password,
-                onTextSelected = {},
-                errorStatus = false
+                onTextChanged = {
+                    registrationViewModel.onEvent(RegistrationUIEvent.PasswordChanged(it))
+                },
+                errorStatus = registrationViewModel.registrationUIState.value.passwordError
             )
 
             Spacer(modifier = Modifier.height(48.dp))
 
             ButtonComponent(
                 text = "Register",
-                onButtonClicked = onRegisterClick,
-                isEnabled = true
+                onButtonClicked = {
+                    registrationViewModel.onRegister(onRegisterClick)
+                },
+                isEnabled = registrationViewModel.allValidationsPassed.value
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -97,7 +113,7 @@ fun RegistrationScreen(onRegisterClick: () -> Unit, onLoginClick: () -> Unit) {
             ClickableTextComponent(
                 text = "Do we know you already?",
                 clickable_text = "Login",
-                onTextSelected = onLoginClick
+                onTextClicked = onLoginClick
             )
 
             AppWatermarkComponent()

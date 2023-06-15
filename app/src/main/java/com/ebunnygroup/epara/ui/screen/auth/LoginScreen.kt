@@ -17,6 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ebunnygroup.epara.data.auth.login.LoginUIEvent
+import com.ebunnygroup.epara.data.auth.login.LoginViewModel
 import com.ebunnygroup.epara.ui.common.AppWatermarkComponent
 import com.ebunnygroup.epara.ui.common.ButtonComponent
 import com.ebunnygroup.epara.ui.common.ClickableTextComponent
@@ -26,7 +29,11 @@ import com.ebunnygroup.epara.ui.theme.EParaTheme
 
 
 @Composable
-fun LoginScreen(onLoginClick: () -> Unit, onRegisterClick: () -> Unit) {
+fun LoginScreen(
+    onLoginClick: () -> Unit,
+    onRegisterClick: () -> Unit,
+    loginViewModel: LoginViewModel = viewModel()
+) {
     val typography = MaterialTheme.typography
     val colors = MaterialTheme.colorScheme
 
@@ -58,23 +65,29 @@ fun LoginScreen(onLoginClick: () -> Unit, onRegisterClick: () -> Unit) {
             TextFieldComponent(
                 labelText = "Email",
                 icon = Icons.Default.MailOutline,
-                onTextChanged = {},
-                errorStatus = false
+                onTextChanged = {
+                    loginViewModel.onEvent(LoginUIEvent.EmailChanged(it))
+                },
+                errorStatus = loginViewModel.loginUIState.value.emailError
             )
 
             SecretTextFieldComponent(
                 labelText = "Password",
                 icon = Icons.Default.Password,
-                onTextSelected = {},
-                errorStatus = false
+                onTextChanged = {
+                    loginViewModel.onEvent(LoginUIEvent.PasswordChanged(it))
+                },
+                errorStatus = loginViewModel.loginUIState.value.passwordError
             )
 
             Spacer(modifier = Modifier.height(48.dp))
 
             ButtonComponent(
                 text = "Login",
-                onButtonClicked = onLoginClick,
-                isEnabled = true
+                onButtonClicked = {
+                    loginViewModel.onLogin(onLoginClicked = onLoginClick)
+                },
+                isEnabled = loginViewModel.allValidationsPassed.value
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -82,7 +95,7 @@ fun LoginScreen(onLoginClick: () -> Unit, onRegisterClick: () -> Unit) {
             ClickableTextComponent(
                 text = "Forgot something?",
                 clickable_text = "BAD",
-                onTextSelected = onRegisterClick
+                onTextClicked = onRegisterClick
             )
 
             AppWatermarkComponent()

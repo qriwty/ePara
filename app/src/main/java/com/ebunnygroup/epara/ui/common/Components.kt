@@ -109,7 +109,7 @@ fun TextFieldComponent(
 fun SecretTextFieldComponent(
     labelText: String,
     icon: ImageVector,
-    onTextSelected: (String) -> Unit,
+    onTextChanged: (String) -> Unit,
     errorStatus: Boolean = false
 ) {
 
@@ -140,7 +140,7 @@ fun SecretTextFieldComponent(
         value = password.value,
         onValueChange = {
             password.value = it
-            onTextSelected(it)
+            onTextChanged(it)
         },
         leadingIcon = {
             Icon(icon, contentDescription = "")
@@ -196,7 +196,7 @@ fun ButtonComponent(
 fun ClickableTextComponent(
     text: String,
     clickable_text: String,
-    onTextSelected: () -> Unit
+    onTextClicked: () -> Unit
 ) {
     val annotatedString = buildAnnotatedString {
         append(text)
@@ -222,7 +222,7 @@ fun ClickableTextComponent(
             annotatedString.getStringAnnotations(offset, offset)
                 .firstOrNull()?.also { span ->
                     if (span.item == clickable_text) {
-                        onTextSelected()
+                        onTextClicked()
                     }
                 }
 
