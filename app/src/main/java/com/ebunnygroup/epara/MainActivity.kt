@@ -10,6 +10,7 @@ import com.ebunnygroup.epara.ui.theme.EParaTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             EParaTheme() {
                 AppNavigation()
