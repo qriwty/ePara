@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.ebunnygroup.epara.data.auth.rules.Validator
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 
 
 class RegistrationViewModel : ViewModel() {
@@ -48,20 +49,28 @@ class RegistrationViewModel : ViewModel() {
 
     fun onRegister(onRegisterClicked: () -> Unit) {
         registrationInProgress.value = true
+
         val email = registrationUIState.value.email
         val password = registrationUIState.value.password
 
-        FirebaseAuth
-            .getInstance()
-            .createUserWithEmailAndPassword(email, password)
+        val firstName = registrationUIState.value.firstName
+        val lastName = registrationUIState.value.lastName
+
+        val auth = FirebaseAuth.getInstance()
+
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
-                registrationInProgress.value = false
                 if (it.isSuccessful) {
+                    val user = auth.currentUser
+                    val userProfileChangeRequest = UserProfileChangeRequest.Builder()
+                        .setDisplayName("$firstName $lastName")
+                        .build()
+
+                    user?.updateProfile(userProfileChangeRequest)
+
                     onRegisterClicked.invoke()
+
                 }
-            }
-            .addOnFailureListener {
-                registrationInProgress.value = false
             }
 
     }

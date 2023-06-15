@@ -35,14 +35,13 @@ class LoginViewModel : ViewModel() {
 
     fun onLogin(onLoginClicked: () -> Unit) {
         loginInProgress.value = true
+
         val email = loginUIState.value.email
         val password = loginUIState.value.password
 
-        loginInProgress.value = true
+        val auth = FirebaseAuth.getInstance()
 
-        FirebaseAuth
-            .getInstance()
-            .signInWithEmailAndPassword(email, password)
+        auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     loginInProgress.value = false
@@ -52,6 +51,7 @@ class LoginViewModel : ViewModel() {
             .addOnFailureListener {
                 loginInProgress.value = false
             }
+
     }
 
     private fun validateLoginUIDataWithRules() {
