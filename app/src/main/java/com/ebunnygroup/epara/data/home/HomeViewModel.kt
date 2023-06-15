@@ -1,4 +1,4 @@
-package com.ebunnygroup.epara.data.auth.home
+package com.ebunnygroup.epara.data.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
