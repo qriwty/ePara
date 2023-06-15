@@ -188,9 +188,8 @@ fun ButtonComponent(
 @Composable
 fun ClickableTextComponent(
     text: String,
-    clickable_text:
-    String,
-    onTextSelected: (String) -> Unit
+    clickable_text: String,
+    onTextSelected: () -> Unit
 ) {
     val annotatedString = buildAnnotatedString {
         append(text)
@@ -216,7 +215,7 @@ fun ClickableTextComponent(
             annotatedString.getStringAnnotations(offset, offset)
                 .firstOrNull()?.also { span ->
                     if (span.item == clickable_text) {
-                        onTextSelected(span.item)
+                        onTextSelected()
                     }
                 }
 
@@ -231,7 +230,7 @@ fun AppWatermarkComponent() {
         Alignment.BottomCenter
     ) {
         Text(
-            text = "EPara App",
+            text = "ePara App",
             modifier = Modifier.padding(16.dp)
         )
     }

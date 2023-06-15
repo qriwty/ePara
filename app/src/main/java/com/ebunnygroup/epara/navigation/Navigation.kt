@@ -33,14 +33,24 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
         route = Screens.Authentication.route
     ) {
         composable(Screens.Authentication.Login.route) {
-            LoginScreen {
-                navController.navigate(Screens.Authentication.Registration.route)
-            }
+            LoginScreen(
+                onLoginClick = {
+                    navController.navigate(Screens.Home.Dashboard.route)
+                },
+                onRegisterClick = {
+                    navController.navigate(Screens.Authentication.Registration.route)
+                }
+            )
         }
         composable(Screens.Authentication.Registration.route) {
-            RegistrationScreen("Registration", navController.previousBackStackEntry?.destination?.route) {
-                navController.navigate(Screens.Home.Dashboard.route)
-            }
+            RegistrationScreen(
+                onRegisterClick = {
+                    navController.navigate(Screens.Home.Dashboard.route)
+                },
+                onLoginClick = {
+                    navController.navigate(Screens.Authentication.Login.route)
+                }
+            )
         }
     }
 }

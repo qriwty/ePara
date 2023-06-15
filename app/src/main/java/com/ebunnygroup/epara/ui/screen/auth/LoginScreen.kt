@@ -26,7 +26,7 @@ import com.ebunnygroup.epara.ui.theme.EParaTheme
 
 
 @Composable
-fun LoginScreen(onNextScreenClick: () -> Unit) {
+fun LoginScreen(onLoginClick: () -> Unit, onRegisterClick: () -> Unit) {
     val typography = MaterialTheme.typography
     val colors = MaterialTheme.colorScheme
 
@@ -73,7 +73,7 @@ fun LoginScreen(onNextScreenClick: () -> Unit) {
 
             ButtonComponent(
                 text = "Login",
-                onButtonClicked = onNextScreenClick,
+                onButtonClicked = onLoginClick,
                 isEnabled = true
             )
 
@@ -82,7 +82,7 @@ fun LoginScreen(onNextScreenClick: () -> Unit) {
             ClickableTextComponent(
                 text = "Forgot something?",
                 clickable_text = "BAD",
-                onTextSelected = {}
+                onTextSelected = onRegisterClick
             )
 
             AppWatermarkComponent()
