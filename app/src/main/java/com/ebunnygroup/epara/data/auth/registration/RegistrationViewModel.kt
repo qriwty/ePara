@@ -3,6 +3,7 @@ package com.ebunnygroup.epara.data.auth.registration
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.ebunnygroup.epara.data.auth.rules.Validator
+import com.google.firebase.auth.FirebaseAuth
 
 
 class RegistrationViewModel : ViewModel() {
@@ -46,7 +47,23 @@ class RegistrationViewModel : ViewModel() {
     }
 
     fun onRegister(onRegisterClicked: () -> Unit) {
-        onRegisterClicked.invoke()
+        registrationInProgress.value = true
+        val email = registrationUIState.value.email
+        val password = registrationUIState.value.password
+
+        FirebaseAuth
+            .getInstance()
+            .createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                registrationInProgress.value = false
+                if (it.isSuccessful) {
+                    onRegisterClicked.invoke()
+                }
+            }
+            .addOnFailureListener {
+                registrationInProgress.value = false
+            }
+
     }
 
     private fun validateDataWithRules() {

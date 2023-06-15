@@ -3,6 +3,7 @@ package com.ebunnygroup.epara.data.auth.login
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.ebunnygroup.epara.data.auth.rules.Validator
+import com.google.firebase.auth.FirebaseAuth
 
 
 class LoginViewModel : ViewModel() {
@@ -33,7 +34,24 @@ class LoginViewModel : ViewModel() {
     }
 
     fun onLogin(onLoginClicked: () -> Unit) {
-        onLoginClicked.invoke()
+        loginInProgress.value = true
+        val email = loginUIState.value.email
+        val password = loginUIState.value.password
+
+        loginInProgress.value = true
+
+        FirebaseAuth
+            .getInstance()
+            .signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    loginInProgress.value = false
+                    onLoginClicked.invoke()
+                }
+            }
+            .addOnFailureListener {
+                loginInProgress.value = false
+            }
     }
 
     private fun validateLoginUIDataWithRules() {

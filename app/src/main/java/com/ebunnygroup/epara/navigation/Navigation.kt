@@ -101,7 +101,7 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
                 onNextScreenClick = {
                 navController.navigate(Screens.Home.Settings.route)
             },
-                profilePhoto = R.drawable.profile_photo,
+                profilePhoto = R.drawable.ic_launcher_foreground,
                 studentName = "Student Full Name",
                 studentGroup = "Group",
                 studentInstitute = "Institute"
