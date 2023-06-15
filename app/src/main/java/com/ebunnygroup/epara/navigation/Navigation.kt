@@ -33,7 +33,7 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
         route = Screens.Authentication.route
     ) {
         composable(Screens.Authentication.Login.route) {
-            LoginScreen("Login", navController.previousBackStackEntry?.destination?.route) {
+            LoginScreen {
                 navController.navigate(Screens.Authentication.Registration.route)
             }
         }
