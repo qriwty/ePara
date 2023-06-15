@@ -1,5 +1,6 @@
 package com.ebunnygroup.epara.navigation
 
+import SettingsScreen
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
@@ -27,7 +28,7 @@ import com.ebunnygroup.epara.ui.screen.auth.RegistrationScreen
 import com.ebunnygroup.epara.ui.screen.home.BottomNavigationScreen
 import com.ebunnygroup.epara.ui.screen.home.DashboardScreen
 import com.ebunnygroup.epara.ui.screen.home.ProfileScreen
-import com.ebunnygroup.epara.ui.screen.home.SettingsScreen
+//import com.ebunnygroup.epara.ui.screen.home.SettingsScreen
 
 
 sealed class Screens(
@@ -108,13 +109,16 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
             )
         }
         composable(Screens.Home.Settings.route) {
-            SettingsScreen("Settings", navController.previousBackStackEntry?.destination?.route) {
-                navController.navigate(Screens.Home.Dashboard.route)
-            }
+            SettingsScreen(
+                screenName = "Settings",
+                previousScreen = navController.previousBackStackEntry?.destination?.route,
+                onNextScreenClick = {
+                    navController.navigate(Screens.Home.Dashboard.route)
+                }
+            )
         }
     }
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
