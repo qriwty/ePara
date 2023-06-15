@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.ebunnygroup.epara.R
 import com.ebunnygroup.epara.ui.screen.auth.LoginScreen
 import com.ebunnygroup.epara.ui.screen.auth.RegistrationScreen
 import com.ebunnygroup.epara.ui.screen.home.BottomNavigationScreen
@@ -94,9 +95,17 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
             }
         }
         composable(Screens.Home.Profile.route) {
-            ProfileScreen("Profile", navController.previousBackStackEntry?.destination?.route) {
+            ProfileScreen(
+                screenName = "Profile",
+                previousScreen = navController.previousBackStackEntry?.destination?.route,
+                onNextScreenClick = {
                 navController.navigate(Screens.Home.Settings.route)
-            }
+            },
+                profilePhoto = R.drawable.profile_photo,
+                studentName = "Student Full Name",
+                studentGroup = "Group",
+                studentInstitute = "Institute"
+            )
         }
         composable(Screens.Home.Settings.route) {
             SettingsScreen("Settings", navController.previousBackStackEntry?.destination?.route) {
@@ -105,6 +114,7 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
         }
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
