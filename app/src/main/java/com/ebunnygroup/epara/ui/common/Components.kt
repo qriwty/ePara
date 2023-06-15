@@ -244,17 +244,9 @@ fun AppWatermarkComponent() {
 }
 
 @Composable
-fun BottomNavigationBarComponent(navController: NavController, item: Screens) {
+fun BottomNavigationBarComponent(onItemClick: () -> Unit, item: Screens) {
     IconButton(
-        onClick = {
-            navController.navigate(item.route) {
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
-                }
-                launchSingleTop = true
-                restoreState = true
-            }
-        }
+        onClick = onItemClick
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
@@ -265,7 +257,8 @@ fun BottomNavigationBarComponent(navController: NavController, item: Screens) {
             )
             Text(
                 text = item.label,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }
