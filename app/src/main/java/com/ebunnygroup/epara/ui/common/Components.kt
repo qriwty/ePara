@@ -1,11 +1,13 @@
 package com.ebunnygroup.epara.ui.common
 
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.Icon
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.R
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -37,10 +39,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.ebunnygroup.epara.navigation.Screens
 import com.ebunnygroup.epara.ui.theme.EParaTheme
 
 
@@ -236,6 +243,34 @@ fun AppWatermarkComponent() {
     }
 }
 
+@Composable
+fun BottomNavigationBarComponent(navController: NavController, item: Screens) {
+    IconButton(
+        onClick = {
+            navController.navigate(item.route) {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
+        }
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Icon(
+                imageVector = item.icon,
+                contentDescription = item.label
+            )
+            Text(
+                text = item.label,
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+
+}
 
 @Composable
 @Preview
