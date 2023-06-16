@@ -22,6 +22,7 @@ private const val TOWNED_DOWN_ALPHA = 0.4F
  */
 fun Modifier.dayBackgroundColor(
     selected: Boolean,
+    positiveSelection: Boolean,
     color: Color,
     date: LocalDate,
     selectedRange: KalendarSelectedDayRange?
@@ -29,7 +30,8 @@ fun Modifier.dayBackgroundColor(
     val inRange = date == selectedRange?.start || date == selectedRange?.end
 
     val backgroundColor = when {
-        selected -> color
+        selected && positiveSelection -> color
+        selected && !positiveSelection -> color.copy(red = 0.5f, green = 0.1f, blue = 0.1f)
         selectedRange != null && date in selectedRange.start..selectedRange.end -> {
             val alpha = if (inRange) FULL_ALPHA else TOWNED_DOWN_ALPHA
             color.copy(alpha = alpha)

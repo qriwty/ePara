@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ebunnygroup.epara.ui.kalendar.KalendarEvent
 import com.ebunnygroup.epara.ui.kalendar.KalendarEvents
@@ -57,6 +58,7 @@ fun KalendarDay(
     selectedRange: KalendarSelectedDayRange?,
     modifier: Modifier = Modifier,
     selectedDate: LocalDate = date,
+    positiveSelection: Boolean = true,
     kalendarEvents: KalendarEvents = KalendarEvents(),
     kalendarDayKonfig: KalendarDayKonfig = KalendarDayKonfig.default(),
 ) {
@@ -73,6 +75,7 @@ fun KalendarDay(
             .clickable { onDayClick(date, kalendarEvents.events) }
             .dayBackgroundColor(
                 selected,
+                positiveSelection,
                 kalendarColors.dayBackgroundColor,
                 date,
                 selectedRange
@@ -94,14 +97,15 @@ fun KalendarDay(
         Row {
             kalendarEvents.events
                 .filter { it.date == date }
-                .take(3)
+                .take(5)
                 .forEachIndexed { index, _ ->
                     Row {
                         KalendarIndicator(
                             modifier = Modifier,
                             index = index,
                             size = kalendarDayKonfig.size,
-                            color = kalendarColors.headerTextColor
+                            color = kalendarColors.headerTextColor,
+                            divider = 5
                         )
                     }
                 }
@@ -144,7 +148,8 @@ private fun KalendarDayPreview() {
             date = date,
             kalendarColors = KalendarColor.previewDefault(),
             onDayClick = { _, _ -> },
-            selectedDate = previous,
+            selectedDate = date,
+            positiveSelection = true,
             kalendarEvents = KalendarEvents(events),
             selectedRange = null
         )
@@ -153,7 +158,8 @@ private fun KalendarDayPreview() {
             date = date.plus(1, DateTimeUnit.DAY),
             kalendarColors = KalendarColor.previewDefault(),
             onDayClick = { _, _ -> },
-            selectedDate = previous,
+            selectedDate = date.plus(1, DateTimeUnit.DAY),
+            positiveSelection = false,
             kalendarEvents = KalendarEvents(events),
             selectedRange = null
         )

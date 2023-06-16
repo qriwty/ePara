@@ -85,6 +85,7 @@ fun Kalendar(
 @Composable
 fun Kalendar(
     currentDay: LocalDate?,
+    exceptionDays: List<LocalDate>? = null,
     kalendarType: KalendarType,
     modifier: Modifier = Modifier,
     showLabel: Boolean = true,
@@ -103,6 +104,7 @@ fun Kalendar(
         KalendarType.Oceanic -> {
             KalendarOceanic(
                 currentDay = currentDay,
+                exceptionDays = exceptionDays,
                 modifier = modifier,
                 showLabel = showLabel,
                 kalendarHeaderTextKonfig = kalendarHeaderTextKonfig,

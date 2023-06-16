@@ -26,12 +26,16 @@ fun KalendarIndicator(
     size: Dp,
     color: Color,
     modifier: Modifier = Modifier,
+    divider: Int
 ) {
+
+    val alpha: Float = (index + 1).toFloat() / divider.toFloat()
+
     Box(
         modifier = modifier
             .padding(horizontal = 1.dp)
             .clip(shape = CircleShape)
-            .background(color = color.copy(alpha = (index + 1) * 0.3f))
+            .background(color = color.copy(alpha = alpha))
             .size(size = size.div(12))
     )
 }

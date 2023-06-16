@@ -73,12 +73,13 @@ private val headerColors = listOf(
 data class KalendarColor(
     val backgroundColor: Color,
     val dayBackgroundColor: Color,
+    val negativeDayBackgroundColor: Color,
     val headerTextColor: Color,
 ) {
     companion object {
 
         internal fun previewDefault() = KalendarColor(
-            kalendarBackgroundColor.first(), backgroundColor.first(), headerColors.first()
+            kalendarBackgroundColor.first(), backgroundColor.first(), backgroundColor.last(), headerColors.first()
         )
     }
 }
@@ -103,6 +104,7 @@ data class KalendarColors(
             val colors = List(TOTAL_MONTH) { index ->
                 KalendarColor(
                     kalendarBackgroundColor[index],
+                    backgroundColor[index],
                     backgroundColor[index],
                     headerColors[index]
                 )

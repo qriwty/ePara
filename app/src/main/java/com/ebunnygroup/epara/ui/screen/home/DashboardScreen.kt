@@ -8,9 +8,30 @@ import com.ebunnygroup.epara.ui.kalendar.KalendarEvent
 import com.ebunnygroup.epara.ui.kalendar.KalendarEvents
 import com.ebunnygroup.epara.ui.kalendar.KalendarType
 import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.plus
 import kotlinx.datetime.todayIn
 
+fun getWeekendDatesInRange(startDate: LocalDate, endDate: LocalDate): List<LocalDate> {
+    val dates = mutableListOf<LocalDate>()
+    var currentDate = startDate
+
+    while (currentDate <= endDate) {
+        if (currentDate.dayOfWeek == DayOfWeek.SATURDAY || currentDate.dayOfWeek == DayOfWeek.SUNDAY) {
+            dates.add(currentDate)
+        }
+        currentDate = currentDate.plus(1, DateTimeUnit.DAY)
+    }
+
+    return dates
+}
+
+val startDate = LocalDate.parse("2023-06-01")
+val endDate = LocalDate.parse("2023-07-01")
+val weekendDates = getWeekendDatesInRange(startDate, endDate)
 
 @Composable
 fun DashboardScreen(screenName: String, previousScreen: String?, onNextScreenClick: () -> Unit) {
@@ -19,19 +40,34 @@ fun DashboardScreen(screenName: String, previousScreen: String?, onNextScreenCli
     Kalendar(
         currentDay = Clock.System.todayIn(
             TimeZone.currentSystemDefault()
-        ), 
+        ),
+        exceptionDays = weekendDates,
         kalendarType = KalendarType.Oceanic,
         events = KalendarEvents(
             listOf(
                 KalendarEvent(
                     date = Clock.System.todayIn(TimeZone.currentSystemDefault()),
                     eventName = "Test Event"
-                )
+                ),
+                KalendarEvent(
+                    date = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+                    eventName = "Test Event"
+                ),
+                KalendarEvent(
+                    date = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+                    eventName = "Test Event"
+                ),
+                KalendarEvent(
+                    date = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+                    eventName = "Test Event"
+                ),
+                KalendarEvent(
+                    date = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+                    eventName = "Test Event"
+                ),
             )
         )
     )
-
-
 }
 
 @Preview

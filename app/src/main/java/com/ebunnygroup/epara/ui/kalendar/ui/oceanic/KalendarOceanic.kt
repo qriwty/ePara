@@ -41,6 +41,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
 import kotlinx.datetime.todayIn
+import java.lang.Exception
 import java.time.Month
 import java.time.format.TextStyle
 import java.util.Locale
@@ -67,6 +68,7 @@ internal fun KalendarOceanic(
     modifier: Modifier = Modifier,
     daySelectionMode: DaySelectionMode = DaySelectionMode.Single,
     currentDay: LocalDate? = null,
+    exceptionDays: List<LocalDate>? = null,
     showLabel: Boolean = true,
     kalendarHeaderTextKonfig: KalendarTextKonfig? = null,
     kalendarColors: KalendarColors = KalendarColors.default(),
@@ -125,7 +127,10 @@ internal fun KalendarOceanic(
             modifier = Modifier.fillMaxWidth(),
             content = {
                 itemsIndexed(weekValue.value) { _, item ->
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.padding(horizontal = 3.dp)
+                    ) {
                         if (showLabel) {
                             Text(
                                 modifier = Modifier,
@@ -136,6 +141,7 @@ internal fun KalendarOceanic(
                                 textAlign = TextAlign.Center
                             )
                         }
+
                         Spacer(modifier = Modifier.padding(vertical = 4.dp))
 
                         if (dayContent != null) {
@@ -163,10 +169,11 @@ internal fun KalendarOceanic(
                                         }
                                     )
                                 },
-                                selectedDate = selectedDate,
+                                selectedDate = if (exceptionDays?.contains(item) == true) item else selectedDate,
+                                positiveSelection = exceptionDays?.contains(item) != true,
                                 kalendarEvents = events,
                                 kalendarDayKonfig = kalendarDayKonfig,
-                                selectedRange = selectedRange.value,
+                                selectedRange = selectedRange.value
                             )
                         }
                     }
@@ -194,6 +201,7 @@ fun KalendarOceanicPreview() {
         currentDay = Clock.System.todayIn(
             TimeZone.currentSystemDefault()
         ),
+        exceptionDays = listOf(LocalDate.parse("2023-06-17")),
         kalendarHeaderTextKonfig = KalendarTextKonfig.previewDefault(),
         daySelectionMode = DaySelectionMode.Single
     )
