@@ -95,15 +95,8 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
         }
         composable(Screens.Home.Profile.route) {
             ProfileScreen(
-                screenName = "Profile",
-                previousScreen = navController.previousBackStackEntry?.destination?.route,
-                onNextScreenClick = {
-                navController.navigate(Screens.Home.Settings.route)
-            },
                 profilePhoto = R.drawable.ic_launcher_foreground,
-                studentName = "Student Full Name",
                 studentGroup = "Group",
-                studentInstitute = "Institute"
             )
         }
         composable(Screens.Home.Settings.route) {
@@ -128,8 +121,7 @@ fun AppNavigation() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-//            startDestination = Screens.Authentication.route,
-            startDestination = Screens.Home.route,
+            startDestination = Screens.Authentication.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             authGraph(navController)

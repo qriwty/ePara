@@ -32,13 +32,8 @@ import com.ebunnygroup.epara.data.home.HomeViewModel
 
 @Composable
 fun ProfileScreen(
-    screenName: String,
-    previousScreen: String?,
-    onNextScreenClick: () -> Unit,
     profilePhoto: Int,
-    studentName: String,
     studentGroup: String,
-    studentInstitute: String,
     homeViewModel: HomeViewModel = viewModel()
 ) {
 
