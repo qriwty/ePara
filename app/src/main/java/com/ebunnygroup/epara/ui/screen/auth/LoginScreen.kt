@@ -93,8 +93,8 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             ClickableTextComponent(
-                text = "Forgot something?",
-                clickable_text = "BAD",
+                text = "Need a registration?",
+                clickable_text = "Welcome",
                 onTextClicked = onRegisterClick
             )
 
