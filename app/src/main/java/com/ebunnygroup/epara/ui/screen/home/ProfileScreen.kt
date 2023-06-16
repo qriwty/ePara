@@ -25,9 +25,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.ebunnygroup.epara.R
-import com.ebunnygroup.epara.ui.common.ScreenContent
+import com.ebunnygroup.epara.data.home.HomeViewModel
 
 @Composable
 fun ProfileScreen(
@@ -37,8 +38,11 @@ fun ProfileScreen(
     profilePhoto: Int,
     studentName: String,
     studentGroup: String,
-    studentInstitute: String
+    studentInstitute: String,
+    homeViewModel: HomeViewModel = viewModel()
 ) {
+
+    homeViewModel.getUserData()
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -73,11 +77,17 @@ fun ProfileScreen(
                 ),
             //elevation = 4.dp
         ) {
-            Text(
-                text = studentName,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(16.dp)
-            )
+            (if (homeViewModel.nameId.value.isNullOrEmpty()) {
+                "No Name"
+            } else {
+                homeViewModel.nameId.value
+            })?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
         Spacer(modifier = Modifier.height(8.dp))
         Card(
@@ -109,34 +119,22 @@ fun ProfileScreen(
                 ),
             //elevation = 4.dp
         ) {
-            Text(
-                text = studentInstitute,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(16.dp)
-            )
+            (if (homeViewModel.emailId.value.isNullOrEmpty()) {
+                "No email"
+            } else {
+                homeViewModel.emailId.value
+            })?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
     }
 }
 
-    //ScreenContent(screenName, previousScreen, onNextScreenClick)
-    //Column(
-        //modifier = Modifier.fillMaxSize(),
-        //verticalArrangement = Arrangement.Center,
-        //horizontalAlignment = Alignment.CenterHorizontally
-    //) {
-        //Image(
-            //painter = painterResource(profilePhoto),
-            //contentDescription = null,
-            //modifier = Modifier.size(128.dp)
-        //)
-        //Spacer(modifier = Modifier.height(16.dp))
-        //Text(text = studentName, style = MaterialTheme.typography.titleLarge)
-        //Text(text = studentGroup, style = MaterialTheme.typography.titleLarge)
-        //Text(text = studentInstitute, style = MaterialTheme.typography.titleLarge)
-    //}
-//}
-
-//@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
