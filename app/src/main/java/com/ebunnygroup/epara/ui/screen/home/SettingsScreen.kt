@@ -19,12 +19,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.ebunnygroup.epara.ui.common.ScreenContent
-import com.ebunnygroup.epara.ui.screen.home.BottomNavigationScreenTest
+import com.ebunnygroup.epara.data.auth.login.LoginViewModel
+import com.ebunnygroup.epara.data.home.HomeViewModel
 
 @Composable
-fun SettingsScreen(screenName: String, previousScreen: String?, onNextScreenClick: () -> Unit) {
+fun SettingsScreen(
+    onLogoutClick: () -> Unit,
+    homeViewModel: HomeViewModel = viewModel()
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -60,7 +64,9 @@ fun SettingsScreen(screenName: String, previousScreen: String?, onNextScreenClic
             }
         }
         Button(
-            onClick = onNextScreenClick,
+            onClick = {
+                homeViewModel.onLogout(onLogoutClicked = onLogoutClick)
+            },
             modifier = Modifier.padding(16.dp)
         ) {
             Text(text = "Вийти")
@@ -69,21 +75,17 @@ fun SettingsScreen(screenName: String, previousScreen: String?, onNextScreenClic
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview
-@Composable
-fun SettingsScreenPreview() {
-    val navController = rememberNavController()
-
-    Scaffold(
-        bottomBar = {
-            BottomNavigationScreenTest(navController = navController)
-        }
-    ) {}
-
-    SettingsScreen(
-        screenName = "Settings",
-        previousScreen = "Home",
-        onNextScreenClick = {}
-    )
-}
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Preview
+//@Composable
+//fun SettingsScreenPreview() {
+//    val navController = rememberNavController()
+//
+//    Scaffold(
+//        bottomBar = {
+//            BottomNavigationScreenTest(navController = navController)
+//        }
+//    ) {}
+//
+//    SettingsScreen()
+//}

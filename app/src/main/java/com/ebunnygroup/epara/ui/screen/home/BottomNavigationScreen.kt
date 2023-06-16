@@ -58,50 +58,50 @@ fun BottomNavigationScreen(navController: NavController) {
     }
 }
 
-@Composable
-fun BottomNavigationScreenTest(navController: NavController = rememberNavController()) {
-    val items = listOf(
-        Screens.Home.Dashboard,
-        Screens.Home.Profile,
-        Screens.Home.Settings
-    )
-
-    BottomAppBar(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            items.forEach { item ->
-                BottomNavigationBarComponent(
-                    onItemClick = {
-                        navController.navigate(item.route) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
-                    item = item
-                )
-            }
-        }
-
-    }
-}
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-@Preview
-fun previewNav() {
-    val navController = rememberNavController()
-    Scaffold(
-        bottomBar = {
-            BottomNavigationScreenTest(navController = navController)
-        }
-    ) {}
-}
+//@Composable
+//fun BottomNavigationScreenTest(navController: NavController = rememberNavController()) {
+//    val items = listOf(
+//        Screens.Home.Dashboard,
+//        Screens.Home.Profile,
+//        Screens.Home.Settings
+//    )
+//
+//    BottomAppBar(
+//        modifier = Modifier.fillMaxWidth()
+//    ) {
+//        Row(
+//            modifier = Modifier.fillMaxWidth(),
+//            horizontalArrangement = Arrangement.SpaceEvenly
+//        ) {
+//            items.forEach { item ->
+//                BottomNavigationBarComponent(
+//                    onItemClick = {
+//                        navController.navigate(item.route) {
+//                            popUpTo(navController.graph.findStartDestination().id) {
+//                                saveState = true
+//                            }
+//                            launchSingleTop = true
+//                            restoreState = true
+//                        }
+//                    },
+//                    item = item
+//                )
+//            }
+//        }
+//
+//    }
+//}
+//
+//@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//@Preview
+//fun previewNav() {
+//    val navController = rememberNavController()
+//    Scaffold(
+//        bottomBar = {
+//            BottomNavigationScreenTest(navController = navController)
+//        }
+//    ) {}
+//}
 

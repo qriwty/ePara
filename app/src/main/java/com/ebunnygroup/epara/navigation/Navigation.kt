@@ -108,10 +108,8 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
         }
         composable(Screens.Home.Settings.route) {
             SettingsScreen(
-                screenName = "Settings",
-                previousScreen = navController.previousBackStackEntry?.destination?.route,
-                onNextScreenClick = {
-                    navController.navigate(Screens.Home.Dashboard.route)
+                onLogoutClick = {
+                    navController.navigate(Screens.Authentication.Login.route)
                 }
             )
         }

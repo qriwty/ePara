@@ -11,11 +11,13 @@ class HomeViewModel : ViewModel() {
 
     val isUserLoggedIn: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun logout() {
+    fun onLogout(onLogoutClicked: () -> Unit) {
 
         val firebaseAuth = FirebaseAuth.getInstance()
 
         firebaseAuth.signOut()
+
+        onLogoutClicked.invoke()
 
         val authStateListener = FirebaseAuth.AuthStateListener {
 //            if (it.currentUser == null) {

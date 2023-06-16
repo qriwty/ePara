@@ -134,26 +134,26 @@ fun ProfileScreen(
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview
-@Composable
-fun ProfileScreenPreview() {
-
-    val navController = rememberNavController()
-    Scaffold(
-        bottomBar = {
-            BottomNavigationScreenTest(navController = navController)
-        }
-    ) {}
-
-    ProfileScreen(
-        screenName = "Profile",
-        previousScreen = "Home",
-        onNextScreenClick = {},
-        profilePhoto = R.drawable.ic_launcher_foreground,
-        studentName = "Surname Name Patronymic",
-        studentGroup = "Group: NUP-202",
-        studentInstitute = "Institute: AIR"
-    )
-}
+//@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Preview
+//@Composable
+//fun ProfileScreenPreview() {
+//
+//    val navController = rememberNavController()
+//    Scaffold(
+//        bottomBar = {
+//            BottomNavigationScreenTest(navController = navController)
+//        }
+//    ) {}
+//
+//    ProfileScreen(
+//        screenName = "Profile",
+//        previousScreen = "Home",
+//        onNextScreenClick = {},
+//        profilePhoto = R.drawable.ic_launcher_foreground,
+//        studentName = "Surname Name Patronymic",
+//        studentGroup = "Group: NUP-202",
+//        studentInstitute = "Institute: AIR"
+//    )
+//}
