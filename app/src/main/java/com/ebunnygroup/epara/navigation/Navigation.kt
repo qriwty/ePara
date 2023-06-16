@@ -132,7 +132,8 @@ fun AppNavigation() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screens.Authentication.route,
+//            startDestination = Screens.Authentication.route,
+            startDestination = Screens.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             authGraph(navController)
