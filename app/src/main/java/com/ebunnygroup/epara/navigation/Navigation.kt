@@ -91,9 +91,7 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
         route = Screens.Home.route
     ) {
         composable(Screens.Home.Dashboard.route) {
-            DashboardScreen("Dashboard", navController.previousBackStackEntry?.destination?.route) {
-                navController.navigate(Screens.Home.Profile.route)
-            }
+            DashboardScreen()
         }
         composable(Screens.Home.Profile.route) {
             ProfileScreen(
